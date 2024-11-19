@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Checkers.MainPage"
+             xmlns:Checkers="clr-namespace:Checkers"
+             xmlns:viewmodel="clr-namespace:Checkers.ViewModel"
+             x:DataType="viewmodel:BoardViewModel">
+
+    <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions= "1*, Auto, 1*"
+          HorizontalOptions="Center" ColumnSpacing="30" RowSpacing="10" Padding="20">
+        <BoxView Grid.Row="0" Grid.Column="0"
+                 BackgroundColor="SlateGray" />
+        <VerticalStackLayout Grid.Row="0" Grid.Column="0"
+                             HorizontalOptions="Center" VerticalOptions="Center"
+                             Spacing="20" >
+            <Label
+                Text="Black Pieces Left" />
+            <Label
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Text="{Binding ScoreOne}" />
+        </VerticalStackLayout>
+        <BoxView Grid.Row="1" Grid.Column="0"
+                 BackgroundColor="SlateGray" />
+        <VerticalStackLayout Grid.Row="1" Grid.Column="0"
+                             HorizontalOptions="Center" VerticalOptions="Center"
+                             Spacing="20" >
+            <Label
+                Text="White Pieces Left" />
+            <Label
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Text="{Binding ScoreTwo}" />
+        </VerticalStackLayout>
+        <CollectionView Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
+                        ItemsSource="{Binding Board}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="8" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Checkers:Square">
+                    <Grid RowDefinitions="50" ColumnDefinitions="50">
+                    <Button
+                        Grid.Row="0" Grid.Column="0"
+                        BackgroundColor= "{Binding color}"
+                        TextColor="{Binding Piece.color}"
+                        FontSize="Medium"
+                        FontAttributes="Bold"
+                        Text="{Binding Piece.player}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}}, Path=SelectCommand}"
+                        CommandParameter="{Binding .}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <BoxView Grid.Row="0" Grid.Column="2"
+                 BackgroundColor="SlateGray" />
+        <VerticalStackLayout Grid.Row="0" Grid.Column="2"
+                     HorizontalOptions="Center" VerticalOptions="Center"
+                     Spacing="20" >
+            <Label
+                Text="Black Pieces Left" />
+            <Label
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Text="{Binding Winner}" />
+        </VerticalStackLayout>
+        <BoxView Grid.Row="1" Grid.Column="2"
+                 BackgroundColor="SlateGray" />
+        <Button Grid.Row="1" Grid.Column="2"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                Text="Press to Crash"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}}, Path=NewGameCommand}" />
+    </Grid>
+
+</ContentPage>
